@@ -1,0 +1,25 @@
+{
+    "name": "lg-xenos/yii2-banner-system",
+    "description": "yii2 Баннерная система ( Banner system )",
+    "type": "yii2-extension",
+    "keywords": ["yii2","extension","banner", "banner system", "баннер", "банер", "баннерная система", "банерная система"],
+    "license": "Apache-2.0",
+    "support": {
+        "source": "https://github.com/lgxenos/yii2-banner-system",
+        "issues": "https://github.com/lgxenos/yii2-banner-system/issues"
+    },
+    "authors": [
+        {
+            "name": "RomanSh",
+            "homepage": "https://github.com/lgxenos/"
+        }
+    ],
+    "require": {
+        "yiisoft/yii2": "^2"
+    },
+    "autoload": {
+        "psr-4": {
+            "lgxenos\\yii2\\banner\\": "src/"
+        }
+    }
+}

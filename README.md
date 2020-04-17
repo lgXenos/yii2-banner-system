@@ -1,10 +1,10 @@
 yii2 Баннерная система ( ALPHA !!! )
 =============
 
-[![Latest Stable Version](https://poser.pugx.org/lgxenos/yii2-banner-system/v/stable)](https://packagist.org/packages/lgxenos/yii2-banner-system)
-[![Total Downloads](https://poser.pugx.org/lgxenos/yii2-banner-system/downloads)](https://packagist.org/packages/lgxenos/yii2-banner-system)
+[![Latest Stable Version](https://poser.pugx.org/lg-xenos/yii2-banner-system/v/stable)](https://packagist.org/packages/lg-xenos/yii2-banner-system)
+[![Total Downloads](https://poser.pugx.org/lg-xenos/yii2-banner-system/downloads)](https://packagist.org/packages/lg-xenos/yii2-banner-system)
 
-![yii2 banner system screenshot](https://github.com/lgxenos/yii2-banner-system/master/img/main.png "Пример главного экрана")
+![yii2 banner system screenshot](https://raw.githubusercontent.com/lgXenos/yii2-banner-system/master/img/main.png "Пример главного экрана")
 
 
 Особенности (Features)

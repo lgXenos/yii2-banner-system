@@ -8,7 +8,7 @@ use yii\base\ErrorException;
 /**
  * banner module definition class
  */
-class Module extends \yii\base\Module implements BootstrapInterface {
+class BannerModule extends \yii\base\Module implements BootstrapInterface {
 	/** @var string $moduleName - имя при подключении через конфиг */
 	public $moduleName;
 	/** @var string $frontPrettyUrl - красивый урл для фронта */
@@ -47,5 +47,20 @@ class Module extends \yii\base\Module implements BootstrapInterface {
 		parent::init();
 		
 		// custom initialization code goes here
+	}
+	
+	public static function setArea($id) {
+		static $moduleInstance;
+		if (!$moduleInstance) {
+			foreach (\Yii::$app->loadedModules as $module) {
+				if ($module instanceof BannerModule) {
+					$moduleInstance = $module;
+					iout($module);
+				}
+			}
+		}
+		if (!$moduleInstance) {
+			echo "<!-- module init error -->";
+		}
 	}
 }

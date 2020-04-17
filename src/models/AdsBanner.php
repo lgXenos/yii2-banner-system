@@ -16,6 +16,7 @@ use Yii;
  * @property int         $zone_id      ID баннерной зоны
  * @property string|null $notice       Заметка для себя
  * @property int         $is_enabled   Включен
+ * @property int         $hash         Служебный хэш
  */
 class AdsBanner extends \yii\db\ActiveRecord {
 	/**
@@ -33,6 +34,7 @@ class AdsBanner extends \yii\db\ActiveRecord {
 			[['title', 'img', 'show_remains', 'user_id', 'zone_id'], 'required'],
 			[['weigth', 'show_remains', 'user_id', 'zone_id', 'is_enabled'], 'integer'],
 			[['title'], 'string', 'max' => 250],
+			[['hash'], 'string', 'max' => 32],
 			[['img'], 'string', 'max' => 512],
 			[['notice'], 'string', 'max' => 1024],
 		];
@@ -52,6 +54,18 @@ class AdsBanner extends \yii\db\ActiveRecord {
 			'zone_id'      => 'ID баннерной зоны',
 			'notice'       => 'Заметка для себя',
 			'is_enabled'   => 'Включен',
+			'hash'         => 'Служебный хэш',
 		];
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	public function beforeSave($insert) {
+		if (empty($this->hash)) {
+			$this->hash = md5(time() . $this->title);
+		}
+		
+		return parent::beforeSave($insert);
 	}
 }

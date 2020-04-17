@@ -1,10 +1,10 @@
-yii2 Баннерная система (RU)
+yii2 Баннерная система ( ALPHA !!! )
 =============
 
 [![Latest Stable Version](https://poser.pugx.org/lgxenos/yii2-banner-system/v/stable)](https://packagist.org/packages/lgxenos/yii2-banner-system)
 [![Total Downloads](https://poser.pugx.org/lgxenos/yii2-banner-system/downloads)](https://packagist.org/packages/lgxenos/yii2-banner-system)
 
-![yii2 ajaxcrud extension screenshot](https://github.com/lgxenos/yii2-banner-system/master/img/main.jpg "Пример главного экрана")
+![yii2 banner system screenshot](https://github.com/lgxenos/yii2-banner-system/master/img/main.png "Пример главного экрана")
 
 
 Особенности (Features)
@@ -23,7 +23,7 @@ yii2 Баннерная система (RU)
 ------------
 
 ```shell script
-composer require --prefer-dist lg-xenos/yii2-banner-system "*"
+composer require lg-xenos/yii2-banner-system
 ```
 
 Или добавить в `composer.json` (or add to `composer.json`)
@@ -63,7 +63,7 @@ yii migrate --migrationPath=@vendor/lgxenos/yii2-banner-system/src/migrations
 + открыть главную страницу по ссылке: http://localhost/adwert
 + создать зону
 + создать баннер  
-+ вставить в view-файл код: `...`
++ вставить в view-файл код: `\lgxenos\yii2\banner\BannerModule::setArea(AREA_ID);`
 
 - - - 
 
@@ -96,4 +96,4 @@ Now we need
 + open system by link http://localhost/adwert
 + create zone
 + create banner  
-+ insert into view-file code: `...`
++ insert into view-file code: `\lgxenos\yii2\banner\BannerModule::setArea(AREA_ID);`

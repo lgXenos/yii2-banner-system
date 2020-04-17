@@ -11,6 +11,8 @@ use Yii;
  * @property string $title       Название
  * @property string $description Описание
  * @property string $zone_type   Тип зоны
+ * @property string $width       Ширина
+ * @property string $heigth      Высота
  * @property int    $is_enabled  Зона включена
  */
 class AdsArea extends \yii\db\ActiveRecord {
@@ -28,7 +30,8 @@ class AdsArea extends \yii\db\ActiveRecord {
 		return [
 			[['title', 'description', 'zone_type'], 'required'],
 			[['zone_type'], 'string'],
-			[['is_enabled'], 'integer'],
+			[['is_enabled'], 'integer', 'min' => 0, 'max' => 1],
+			[['width', 'heigth'], 'integer', 'min' => 0, 'max' => 5000],
 			[['title'], 'string', 'max' => 250],
 			[['description'], 'string', 'max' => 2048],
 		];
@@ -43,6 +46,8 @@ class AdsArea extends \yii\db\ActiveRecord {
 			'title'       => 'Название',
 			'description' => 'Описание',
 			'zone_type'   => 'Тип зоны',
+			'width'       => 'Ширина',
+			'heigth'      => 'Высота',
 			'is_enabled'  => 'Зона включена',
 		];
 	}

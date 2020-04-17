@@ -15,6 +15,8 @@ CREATE TABLE `ads_area` (
   `title` varchar(250) NOT NULL COMMENT 'Название',
   `description` varchar(2048) NOT NULL COMMENT 'Описание',
   `zone_type` enum('mobile','desktop') NOT NULL COMMENT 'Тип зоны',
+  `width` int(8) UNSIGNED NOT NULL COMMENT 'Ширина',
+  `heigth` int(8) UNSIGNED NOT NULL COMMENT 'Высота',
   `is_enabled` tinyint(1) NOT NULL DEFAULT '1' COMMENT 'Зона включена',
   PRIMARY KEY (`id`),
   KEY `zone_type` (`zone_type`),
@@ -32,6 +34,7 @@ CREATE TABLE `ads_banner` (
   `zone_id` bigint(16) unsigned NOT NULL COMMENT 'ID баннерной зоны',
   `notice` varchar(1024) DEFAULT NULL COMMENT 'Заметка для себя',
   `is_enabled` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Включен',
+  `hash` varchar(32) NOT NULL COMMENT 'Служебный хэш',
   PRIMARY KEY (`id`),
   KEY `show_remains` (`show_remains`),
   KEY `is_enabled` (`is_enabled`)

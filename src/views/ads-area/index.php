@@ -11,7 +11,7 @@ use johnitvn\ajaxcrud\BulkButtonWidget;
 /* @var $searchModel lgxenos\yii2\banner\models\AdsAreaSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title                   = 'Ads Areas';
+$this->title                   = 'Рекламные зоны';
 $this->params['breadcrumbs'][] = $this->title;
 
 CrudAsset::register($this);
@@ -30,7 +30,7 @@ CrudAsset::register($this);
 				[
 					'content' =>
 						Html::a('<i class="glyphicon glyphicon-plus"></i>', ['create'],
-							['role' => 'modal-remote', 'title' => 'Создание Ads Areas', 'class' => 'btn btn-default']) .
+							['role' => 'modal-remote', 'title' => 'Создание рекламной зоны', 'class' => 'btn btn-default']) .
 						Html::a('<i class="glyphicon glyphicon-repeat"></i>', [''],
 							['data-pjax' => 1, 'class' => 'btn btn-default', 'title' => 'Сброс Grid']) .
 						'{toggleData}' .
@@ -42,7 +42,7 @@ CrudAsset::register($this);
 			'responsive'   => true,
 			'panel'        => [
 				'type'    => 'primary',
-				'heading' => '<i class="glyphicon glyphicon-list"></i> Записи Ads Areas ',
+				'heading' => '<i class="glyphicon glyphicon-list"></i> Записи рекламных зон ',
 				'before'  => '<em>* Размер столбца можно изменить, перетащив за край столбца.</em>',
 				'after'   => BulkButtonWidget::widget([
 						'buttons' => Html::a('<i class="glyphicon glyphicon-trash"></i>&nbsp; Удалить все',

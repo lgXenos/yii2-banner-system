@@ -11,7 +11,7 @@ use johnitvn\ajaxcrud\BulkButtonWidget;
 /* @var $searchModel lgxenos\yii2\banner\models\AdsBannerSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title                   = 'Ads Banners';
+$this->title                   = 'Баннеры';
 $this->params['breadcrumbs'][] = $this->title;
 
 CrudAsset::register($this);
@@ -31,7 +31,7 @@ CrudAsset::register($this);
 					'content' =>
 						Html::a('<i class="glyphicon glyphicon-plus"></i>', ['create'],
 							['role'  => 'modal-remote',
-							 'title' => 'Создание Ads Banners',
+							 'title' => 'Создание нового банера',
 							 'class' => 'btn btn-default',
 							]) .
 						Html::a('<i class="glyphicon glyphicon-repeat"></i>', [''],
@@ -45,7 +45,7 @@ CrudAsset::register($this);
 			'responsive'   => true,
 			'panel'        => [
 				'type'    => 'primary',
-				'heading' => '<i class="glyphicon glyphicon-list"></i> Записи Ads Banners ',
+				'heading' => '<i class="glyphicon glyphicon-list"></i> Список баннеров ',
 				'before'  => '<em>* Размер столбца можно изменить, перетащив за край столбца.</em>',
 				'after'   => BulkButtonWidget::widget([
 						'buttons' => Html::a('<i class="glyphicon glyphicon-trash"></i>&nbsp; Удалить все',

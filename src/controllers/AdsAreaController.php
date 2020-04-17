@@ -93,7 +93,7 @@ class AdsAreaController extends Controller {
 			Yii::$app->response->format = Response::FORMAT_JSON;
 			if ($request->isGet) {
 				return [
-					'title'   => "Добавить запись AdsArea",
+					'title'   => "Добавить новую рекламную зону",
 					'content' => $this->renderAjax('create', [
 						'model' => $model,
 					]),
@@ -108,7 +108,7 @@ class AdsAreaController extends Controller {
 			else if ($model->load($request->post()) && $model->save()) {
 				return [
 					'forceReload' => '#crud-datatable-pjax',
-					'title'       => "Добавить запись AdsArea",
+					'title'       => "Добавить новую рекламную зону",
 					'content'     => '<span class="text-success">Создание AdsArea успешно</span>',
 					'footer'      => Html::button('Закрыть', [
 							'class'        => 'btn btn-default pull-left',
@@ -120,7 +120,7 @@ class AdsAreaController extends Controller {
 			}
 			else {
 				return [
-					'title'   => "Добавить запись AdsArea",
+					'title'   => "Добавить новую рекламную зону",
 					'content' => $this->renderAjax('create', [
 						'model' => $model,
 					]),
@@ -168,7 +168,7 @@ class AdsAreaController extends Controller {
 			Yii::$app->response->format = Response::FORMAT_JSON;
 			if ($request->isGet) {
 				return [
-					'title'   => "Правка AdsArea #" . $id,
+					'title'   => "Правка рекламной зоны #" . $id,
 					'content' => $this->renderAjax('update', [
 						'model' => $model,
 					]),
@@ -198,7 +198,7 @@ class AdsAreaController extends Controller {
 			}
 			else {
 				return [
-					'title'   => "Правка AdsArea #" . $id,
+					'title'   => "Правка рекламной зоны #" . $id,
 					'content' => $this->renderAjax('update', [
 						'model' => $model,
 					]),

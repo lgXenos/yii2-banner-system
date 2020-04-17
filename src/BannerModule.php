@@ -13,6 +13,10 @@ class BannerModule extends \yii\base\Module implements BootstrapInterface {
 	public $moduleName;
 	/** @var string $frontPrettyUrl - красивый урл для фронта */
 	public $frontPrettyUrl;
+	/** @var string $userModel - клас модели юзеров */
+	public $userModel = \common\models\User::class;
+	/** @var string $userModel - имя поля из модели юзеров */
+	public $userModelName = 'username';
 	
 	/**
 	 * @param \yii\base\Application $app
@@ -49,18 +53,36 @@ class BannerModule extends \yii\base\Module implements BootstrapInterface {
 		// custom initialization code goes here
 	}
 	
+	/**
+	 * резеравируем данный участок в шаблоне под рекламную зону
+	 *
+	 * @param $id
+	 */
 	public static function setArea($id) {
+		$moduleInstance = self::getModuleInstance();
+		if (!$moduleInstance) {
+			echo "<!-- module init error -->";
+		}
+	}
+	
+	/**
+	 * ищем в приложении свой инстанс, чтоб обращаться к параметрам
+	 * вероятно есть иной способ, но я о нем не знаю
+	 *
+	 * @return BannerModule|null
+	 */
+	public static function getModuleInstance() {
+		/** @var $moduleInstance $module */
 		static $moduleInstance;
 		if (!$moduleInstance) {
 			foreach (\Yii::$app->loadedModules as $module) {
 				if ($module instanceof BannerModule) {
 					$moduleInstance = $module;
-					iout($module);
+					//iout($module);
 				}
 			}
 		}
-		if (!$moduleInstance) {
-			echo "<!-- module init error -->";
-		}
+		
+		return $moduleInstance;
 	}
 }

@@ -16,7 +16,7 @@ class AdsBannerSearch extends AdsBanner {
 	 */
 	public function rules() {
 		return [
-			[['id', 'weigth', 'show_remains', 'user_id', 'zone_id'], 'integer'],
+			[['id', 'weigth', 'show_remains', 'user_id', 'area_id'], 'integer'],
 			[['title', 'img', 'notice', 'is_enabled'], 'safe'],
 		];
 	}
@@ -56,7 +56,7 @@ class AdsBannerSearch extends AdsBanner {
 			'weigth'       => $this->weigth,
 			'show_remains' => $this->show_remains,
 			'user_id'      => $this->user_id,
-			'zone_id'      => $this->zone_id,
+			'area_id'      => $this->area_id,
 		]);
 		
 		$query->andFilterWhere(['like', 'title', $this->title])

@@ -3,6 +3,7 @@
 namespace lgxenos\yii2\banner\models;
 
 use Yii;
+use yii\base\ErrorException;
 
 /**
  * This is the model class for table "ads_banner".
@@ -13,10 +14,12 @@ use Yii;
  * @property int         $weigth       Вес
  * @property int         $show_remains Остаток показов
  * @property int         $user_id      ID пользователя
- * @property int         $zone_id      ID баннерной зоны
+ * @property int         $area_id      ID баннерной зоны
  * @property string|null $notice       Заметка для себя
  * @property int         $is_enabled   Включен
  * @property int         $hash         Служебный хэш
+ *                                     
+ * @property AdsArea     $area         Зона установки банера
  */
 class AdsBanner extends \yii\db\ActiveRecord {
 	/**
@@ -31,8 +34,8 @@ class AdsBanner extends \yii\db\ActiveRecord {
 	 */
 	public function rules() {
 		return [
-			[['title', 'img', 'show_remains', 'user_id', 'zone_id'], 'required'],
-			[['weigth', 'show_remains', 'user_id', 'zone_id', 'is_enabled'], 'integer'],
+			[['title', 'img', 'show_remains', 'user_id', 'area_id'], 'required'],
+			[['weigth', 'show_remains', 'user_id', 'area_id', 'is_enabled'], 'integer'],
 			[['title'], 'string', 'max' => 250],
 			[['hash'], 'string', 'max' => 32],
 			[['img'], 'string', 'max' => 512],
@@ -51,7 +54,7 @@ class AdsBanner extends \yii\db\ActiveRecord {
 			'weigth'       => 'Вес',
 			'show_remains' => 'Остаток показов',
 			'user_id'      => 'ID пользователя',
-			'zone_id'      => 'ID баннерной зоны',
+			'area_id'      => 'ID баннерной зоны',
 			'notice'       => 'Заметка для себя',
 			'is_enabled'   => 'Включен',
 			'hash'         => 'Служебный хэш',
@@ -67,5 +70,24 @@ class AdsBanner extends \yii\db\ActiveRecord {
 		}
 		
 		return parent::beforeSave($insert);
+	}
+	
+	
+	/**
+	 * Реляция на банеры
+	 *
+	 * @return \yii\db\ActiveQuery
+	 */
+	public function getArea() {
+		//                             <--------------->
+		return $this->hasOne(AdsArea::class, ['id' => 'area_id']);
+		//                                              selfModel  -> ^
+	}
+	
+	public function delete() {
+		if($this->show_remains){
+			throw new ErrorException('Нельзя удалять активные баннера');
+		}
+		return parent::delete();
 	}
 }

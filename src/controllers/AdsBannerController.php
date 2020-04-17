@@ -93,7 +93,7 @@ class AdsBannerController extends Controller {
 			Yii::$app->response->format = Response::FORMAT_JSON;
 			if ($request->isGet) {
 				return [
-					'title'   => "Добавить запись AdsBanner",
+					'title'   => "Добавить новый баннер",
 					'content' => $this->renderAjax('create', [
 						'model' => $model,
 					]),
@@ -108,7 +108,7 @@ class AdsBannerController extends Controller {
 			else if ($model->load($request->post()) && $model->save()) {
 				return [
 					'forceReload' => '#crud-datatable-pjax',
-					'title'       => "Добавить запись AdsBanner",
+					'title'       => "Добавить запись новый баннер",
 					'content'     => '<span class="text-success">Создание AdsBanner успешно</span>',
 					'footer'      => Html::button('Закрыть', [
 							'class'        => 'btn btn-default pull-left',
@@ -120,7 +120,7 @@ class AdsBannerController extends Controller {
 			}
 			else {
 				return [
-					'title'   => "Добавить запись AdsBanner",
+					'title'   => "Добавить новый баннер",
 					'content' => $this->renderAjax('create', [
 						'model' => $model,
 					]),
@@ -168,7 +168,7 @@ class AdsBannerController extends Controller {
 			Yii::$app->response->format = Response::FORMAT_JSON;
 			if ($request->isGet) {
 				return [
-					'title'   => "Правка AdsBanner #" . $id,
+					'title'   => "Правка баннера #" . $id,
 					'content' => $this->renderAjax('update', [
 						'model' => $model,
 					]),
@@ -198,7 +198,7 @@ class AdsBannerController extends Controller {
 			}
 			else {
 				return [
-					'title'   => "Правка AdsBanner #" . $id,
+					'title'   => "Правка баннера #" . $id,
 					'content' => $this->renderAjax('update', [
 						'model' => $model,
 					]),

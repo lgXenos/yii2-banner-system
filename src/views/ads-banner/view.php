@@ -16,7 +16,7 @@ use yii\widgets\DetailView;
 			'weigth',
 			'show_remains',
 			'user_id',
-			'zone_id',
+			'area_id',
 			'notice',
 			'is_enabled',
 		],

@@ -32,8 +32,8 @@ class AdsArea extends \yii\db\ActiveRecord {
 	 */
 	public function rules() {
 		return [
-			[['title', 'zone_type'], 'required'],
-			[['zone_type'], 'in', 'range' => array_keys(self::getTypesArray())],
+			[['title', 'area_type'], 'required'],
+			[['area_type'], 'in', 'range' => array_keys(self::getTypesArray())],
 			[['is_enabled'], 'integer', 'min' => 0, 'max' => 1],
 			[['width', 'heigth'], 'integer', 'min' => 0, 'max' => 5000],
 			[['title'], 'string', 'max' => 250],
@@ -49,7 +49,7 @@ class AdsArea extends \yii\db\ActiveRecord {
 			'id'          => 'ID',
 			'title'       => 'Название',
 			'description' => 'Заметка-описание',
-			'zone_type'   => 'Тип зоны',
+			'area_type'   => 'Тип зоны',
 			'width'       => 'Ширина, px',
 			'heigth'      => 'Высота, px',
 			'is_enabled'  => 'Зона включена',
@@ -87,12 +87,38 @@ class AdsArea extends \yii\db\ActiveRecord {
 		];
 	}
 	
+	/**
+	 * список для выпадашек
+	 * 
+	 * @return array
+	 */
 	public static function getDropdownList() {
 		return self::find()
-			->select(["CONCAT(title,' (', width, 'x', heigth, ', ', zone_type, ')') as title"])
+			->select(["CONCAT(title,' (', width, 'x', heigth, ', ', area_type, ')') as title"])
 			->indexBy('id')
 			->orderBy('title ASC')
 			->asArray()
 			->column();
+	}
+	
+	/**
+	 * получить ID баннеров и их веса
+	 * 
+	 * @return array|AdsAreaQuery[]
+	 */
+	public function getBannerIdAndWeigth() {
+		return self::find()
+			->getActiveBanners($this->id)
+			->select([AdsBanner::tableName() . '.[[id]] AS id', AdsBanner::tableName() . '.[[weigth]] AS weigth',])
+			->asArray()
+			->all();
+	}
+	
+	/**
+	 * @inheritdoc
+	 * @return AdsAreaQuery the active query used by this AR class.
+	 */
+	public static function find() {
+		return new AdsAreaQuery(get_called_class());
 	}
 }

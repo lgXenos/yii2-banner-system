@@ -45,4 +45,21 @@ class AdsStat extends \yii\db\ActiveRecord {
 			'cnt_click' => 'Количество кликов в дату',
 		];
 	}
+	
+	public static function insertStatRow($bannerId, $showCnt, $clickCnt){
+		$connection = Yii::$app->getDb();
+		$commandObj = $connection->createCommand()->insert(self::tableName(), [
+			'banner_id' => $bannerId,
+			'show_date' => date("Y-m-d"),
+			'cnt_show'  => (int) $showCnt,
+			'cnt_click' => (int) $clickCnt,
+		]);
+		$sql = $commandObj->getRawSql()
+			. ' ON DUPLICATE KEY UPDATE '
+			. ' `cnt_show` = `cnt_show` + ' . (int) $showCnt . ', '
+			. ' `cnt_click` = `cnt_click` + ' . (int) $clickCnt
+		;
+		
+		$connection->createCommand($sql)->execute();
+	}
 }

@@ -13,7 +13,7 @@ use yii\widgets\DetailView;
 			'id',
 			'title',
 			'description',
-			'zone_type',
+			'area_type',
 			'is_enabled',
 		],
 	]) ?>

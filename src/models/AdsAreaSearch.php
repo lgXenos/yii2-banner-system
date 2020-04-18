@@ -17,7 +17,7 @@ class AdsAreaSearch extends AdsArea {
 	public function rules() {
 		return [
 			[['id'], 'integer'],
-			[['title', 'description', 'zone_type', 'is_enabled'], 'safe'],
+			[['title', 'description', 'area_type', 'is_enabled'], 'safe'],
 		];
 	}
 	
@@ -57,7 +57,7 @@ class AdsAreaSearch extends AdsArea {
 		
 		$query->andFilterWhere(['like', 'title', $this->title])
 			->andFilterWhere(['like', 'description', $this->description])
-			->andFilterWhere(['like', 'zone_type', $this->zone_type])
+			->andFilterWhere(['like', 'area_type', $this->area_type])
 			->andFilterWhere(['like', 'is_enabled', $this->is_enabled]);
 		
 		return $dataProvider;

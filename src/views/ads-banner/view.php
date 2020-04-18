@@ -19,6 +19,8 @@ use yii\widgets\DetailView;
 			'area_id',
 			'notice',
 			'is_enabled',
+			'hash',
+			'created_at',
 		],
 	]) ?>
 

@@ -41,12 +41,12 @@ return [
 	],
 	[
 		'class'               => '\kartik\grid\DataColumn',
-		'attribute'           => 'zone_type',
+		'attribute'           => 'area_type',
 		'width'               => '145px',
 		'hAlign'              => 'center',
 		'value'               => function ($model, $key, $index, $widget) {
-			//return AdsArea::getTypesArray()[$model->zone_type];
-			$img = $model->zone_type == AdsArea::ADS_AREA_TYPE_DESKTOP ? CommonHelper::getImgPc() : CommonHelper::getImgMobile();
+			//return AdsArea::getTypesArray()[$model->area_type];
+			$img = $model->area_type == AdsArea::ADS_AREA_TYPE_DESKTOP ? CommonHelper::getImgPc() : CommonHelper::getImgMobile();
 			
 			return "<img src='{$img}' style='height: 20px;'>";
 		},

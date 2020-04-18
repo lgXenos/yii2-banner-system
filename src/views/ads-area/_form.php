@@ -30,7 +30,7 @@ use lgxenos\yii2\banner\models\AdsArea;
 						</td>
 						<td>&nbsp;</td>
 						<td>
-							<?= $form->field($model, 'zone_type')->dropDownList(AdsArea::getTypesArray(), ['prompt' => '']) ?>
+							<?= $form->field($model, 'area_type')->dropDownList(AdsArea::getTypesArray(), ['prompt' => '']) ?>
 						</td>
 					</tr>
 				</table>

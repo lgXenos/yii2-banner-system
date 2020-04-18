@@ -24,6 +24,8 @@ if ($model->user_id === null || $model->user_id === '') {
 			<td style="width: 49%;vertical-align: top;">
 				<?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 				
+				<?= $form->field($model, 'url')->textInput(['maxlength' => true]) ?>
+				
 				<?php if ($model->isNewRecord): ?>
 					<?= $form->field($model, 'img')->textInput(['maxlength' => true]) ?>
 				<?php endif; ?>
@@ -55,6 +57,7 @@ if ($model->user_id === null || $model->user_id === '') {
 				
 				<?= $form->field($model, 'notice')->textInput(['maxlength' => true]) ?>
 				<?= $model->isNewRecord ? '' : $form->field($model, 'hash')->textInput(['readonly' => true]) ?>
+				<?= $model->isNewRecord ? '' : $form->field($model, 'created_at')->textInput(['readonly' => true]) ?>
 
 			</td>
 		</tr>

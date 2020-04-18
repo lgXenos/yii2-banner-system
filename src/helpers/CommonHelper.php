@@ -42,18 +42,99 @@ class CommonHelper extends BaseObject {
 	 *
 	 * @return string
 	 */
-	public static function getUserById($id){
+	public static function getUserById($id) {
 		$module = BannerModule::getModuleInstance();
-
-		try{
+		
+		try {
 			$uModel = $module->userModel;
-			$u = $uModel::findOne($id);
+			$u      = $uModel::findOne($id);
+			
 			/** @var $u User */
 			return $u->{$module->userModelName};
 		}
-		catch (\Throwable $e){
-			return 'User id #'. $id;
+		catch (\Throwable $e) {
+			return 'User id #' . $id;
 		}
 		
+	}
+	
+	/**
+	 * Случайно выбирает один из элементов на основе их веса.
+	 * Оптимизирован для большого числа элементов.
+	 *
+	 * @param array $values       индексный массив элементов
+	 * @param array $weights      индексный массив соответствующих весов
+	 * @param array $lookup       отсортированный массив для поиска
+	 * @param int   $total_weight сумма всех весов
+	 *
+	 * @return mixed выбранный элемент
+	 *
+	 * @url https://dotzero.blog/weighted-random-simple/
+	 *
+	 */
+	public static function weighted_random($values, $weights, $lookup = null, $total_weight = null) {
+		if ($lookup == null OR $total_weight == null) {
+			list($lookup, $total_weight) = self::calc_lookups($values, $weights);
+		}
+		
+		$r = mt_rand(1, $total_weight);
+		
+		return $values[self::binary_search($r, $lookup)];
+	}
+	
+	/**
+	 * Создание массива используемого в бинарном поиске
+	 *
+	 * @param array $values
+	 * @param array $weights
+	 *
+	 * @return array
+	 */
+	public static function calc_lookups($values, $weights) {
+		$lookup       = [];
+		$total_weight = 0;
+		
+		for ($i = 0; $i < count($weights); $i++) {
+			$total_weight += $weights[$i];
+			$lookup[$i]   = $total_weight;
+		}
+		
+		return [$lookup, $total_weight];
+	}
+	
+	/**
+	 * Ищет в массиве элемент по номеру и возвращает элемент если он найден.
+	 * В противном случае возвращает позицию, где он должен быть вставлен,
+	 * или count($haystack)-1, если $needle больше чем любой элемент в массиве.
+	 *
+	 * @param int   $needle
+	 * @param array $haystack
+	 *
+	 * @return int
+	 */
+	public static function binary_search($needle, $haystack) {
+		$high = count($haystack) - 1;
+		$low  = 0;
+		
+		while ($low < $high) {
+			$probe = (int)(($high + $low) / 2);
+			
+			if ($haystack[$probe] < $needle) {
+				$low = $probe + 1;
+			}
+			else if ($haystack[$probe] > $needle) {
+				$high = $probe - 1;
+			}
+			else {
+				return $probe;
+			}
+		}
+		
+		if ($low != $high) {
+			return $probe;
+		}
+		else {
+			return ($haystack[$low] >= $needle) ? $low : $low + 1;
+		}
 	}
 }

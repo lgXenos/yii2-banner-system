@@ -19,6 +19,13 @@ yii2 Баннерная система ( ALPHA !!! )
 + Advert zones divided to mobile & desktop
 + Work on MySql v.5+ because of [on-duplicate-key-update](https://www.mysqltutorial.org/mysql-insert-or-update-on-duplicate-key-update/) to speed-up stat counters
 
+Требования (Requipments)
+------------
+PHP v7+ (v5.6 - не тестировал (`not tested`))
+MySql v5.6 (другое не тестировал (`other not tested`))
+JQuery v3+ (другое не тестировал (`other not tested`))
+Yii CSRF-Tokens (без них не тестировал (`not tested without`))
+
 Установка (Installation)
 ------------
 
@@ -45,9 +52,14 @@ composer require lg-xenos/yii2-banner-system
 	'modules'             => [
 		/* ... */
 		'adwert'   => [
-			'class'          => lgxenos\yii2\banner\Module::class,
-			'moduleName'     => 'adwert',
-			'frontPrettyUrl' => 'asd',
+			'class'          => lgxenos\yii2\banner\BannerModule::class,
+			// module settings
+			'frontPrettyUrl' => '/asd/',
+			'userModel'      => \common\models\User::class,
+			'userModelName'  => 'username',
+			'uploadPath'     => '@frontend/upload/banners/%USER_ID%/',
+			'uploadWebPath'  => '/upload/banners/%USER_ID%/',
+			// yii settings
 			'layout'         => '@frontend/modules/yiiAdmin/views/layouts/main.php',
 		],
 		/* ... */
@@ -79,8 +91,7 @@ Let 's add into 2 places of your app-config (for example `frontend/config/main.p
 		/* ... */
 		'adwert'   => [
 			'class'          => lgxenos\yii2\banner\Module::class,
-			'moduleName'     => 'adwert',
-			'frontPrettyUrl' => 'asd',
+			'frontPrettyUrl' => '/asd/',
 			'layout'         => '@frontend/modules/yiiAdmin/views/layouts/main.php',
 		],
 		/* ... */

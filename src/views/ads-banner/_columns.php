@@ -62,9 +62,17 @@ return [
 		'vAlign'    => 'middle',
 	],
 	[
+		'class'          => '\kartik\grid\DataColumn',
+		'attribute'      => 'url',
+		'vAlign'         => 'middle',
+		'contentOptions' => ['style' => 'white-space: normal;'],
+	],
+	[
 		'class'     => '\kartik\grid\DataColumn',
 		'attribute' => 'show_remains',
 		'vAlign'    => 'middle',
+		'width'     => '140px',
+		'hAlign'    => 'center',
 	],
 	[
 		'class'     => '\kartik\grid\DataColumn',
@@ -85,8 +93,10 @@ return [
 		'value'     => function ($model) {
 			/** @var $model \lgxenos\yii2\banner\models\AdsBanner */
 			return
+				'<a href="' . Url::to(['ads-area/index', 'AdsAreaSearch[id]' => $model->area_id]) . '">' .
 				'№' . $model->area_id . '<br>' .
-				sprintf("%s (%sx%s, %s)", $model->area->title, $model->area->width, $model->area->heigth, $model->area->zone_type);
+				sprintf("%s (%sx%s, %s)", $model->area->title, $model->area->width, $model->area->heigth, $model->area->area_type) .
+				'</a>';
 		},
 	],
 	[

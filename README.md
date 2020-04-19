@@ -5,6 +5,7 @@ yii2 Баннерная система ( ALPHA !!! )
 [![Total Downloads](https://poser.pugx.org/lg-xenos/yii2-banner-system/downloads)](https://packagist.org/packages/lg-xenos/yii2-banner-system)
 
 ![yii2 banner system screenshot](https://raw.githubusercontent.com/lgXenos/yii2-banner-system/master/img/main.png "Пример главного экрана")
+![yii2 banner system screenshot](https://raw.githubusercontent.com/lgXenos/yii2-banner-system/master/img/main1.png "Пример главного экрана")
 
 
 Особенности (Features)
@@ -21,10 +22,11 @@ yii2 Баннерная система ( ALPHA !!! )
 
 Требования (Requipments)
 ------------
-PHP v7+ (v5.6 - не тестировал (`not tested`))
-MySql v5.6 (другое не тестировал (`other not tested`))
-JQuery v3+ (другое не тестировал (`other not tested`))
-Yii CSRF-Tokens (без них не тестировал (`not tested without`))
+
++ PHP v7+ (v5.6 - не тестировал (`not tested`))
++ MySql v5.6 (другое не тестировал (`other not tested`))
++ JQuery v3+ (другое не тестировал (`other not tested`))
++ Yii CSRF-Tokens (без них не тестировал (`not tested without`))
 
 Установка (Installation)
 ------------

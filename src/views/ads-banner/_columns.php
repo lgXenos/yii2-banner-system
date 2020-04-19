@@ -60,6 +60,12 @@ return [
 		'class'     => '\kartik\grid\DataColumn',
 		'attribute' => 'title',
 		'vAlign'    => 'middle',
+		'format'    => 'raw',
+		'value'     => function ($model) {
+			/** @var $model \lgxenos\yii2\banner\models\AdsBanner */
+			return "<b>{$model->title}</b><br>
+					<small>Показов: {$model->cnt_show}, Переходов: {$model->cnt_click}</small>";
+		},
 	],
 	[
 		'class'          => '\kartik\grid\DataColumn',

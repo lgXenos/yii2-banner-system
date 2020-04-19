@@ -67,12 +67,38 @@ class AdsArea extends \yii\db\ActiveRecord {
 		//                                              selfModel  -> ^
 	}
 	
+	/**
+	 * предотвращаем удаление зоны, к которой привязаны баннеры
+	 * 
+	 * @return false|int
+	 * @throws ErrorException
+	 * @throws \Throwable
+	 * @throws \yii\db\StaleObjectException
+	 */
 	public function delete() {
 		if ($this->getBanners()->count()) {
 			throw new ErrorException('Нельзя удалить зону, за которой закреплены баннеры.');
 		}
 		
 		return parent::delete();
+	}
+	
+	/**
+	 * получаем общую статистику по баннерам в этой зоне: total + active
+	 * 
+	 * 
+	 * @return array
+	 */
+	public function getLinkedBannersOverview(){
+		static $ret;
+		if(!$ret){
+			$ret = [
+				'total' => $this->getBanners()->count(),
+				'active' => $this->getBanners()->andWhere(['is_enabled'=>1])->count(),
+			];
+		}
+		
+		return $ret;
 	}
 	
 	/**

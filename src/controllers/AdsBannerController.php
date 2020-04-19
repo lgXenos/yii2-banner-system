@@ -66,7 +66,10 @@ class AdsBannerController extends Controller {
 						'class'        => 'btn btn-default pull-left',
 						'data-dismiss' => "modal",
 					]) .
-					Html::a('Правка', ['update', 'id' => $id], ['class' => 'btn btn-primary', 'role' => 'modal-remote']),
+					Html::a('Правка', ['update', 'id' => $id], [
+						'class' => 'btn btn-primary',
+						'role'  => 'modal-remote',
+					]),
 			];
 		}
 		else {
@@ -285,6 +288,14 @@ class AdsBannerController extends Controller {
 			return $this->redirect(['index']);
 		}
 		
+	}
+	
+	public function actionStat($id) {
+		$model = $this->findModel($id);
+		
+		return $this->render('stat', [
+			'model' => $model,
+		]);
 	}
 	
 	/**

@@ -32,14 +32,40 @@ if ($model->user_id === null || $model->user_id === '') {
 				
 				
 				<?= $form->field($model, 'weigth')->textInput() ?>
-				
-				<?= $form->field($model, 'show_remains')->textInput(['maxlength' => true]) ?>
+
+				<table>
+					<tr>
+						<td>
+							<?= $form->field($model, 'show_remains')->textInput(['maxlength' => true]) ?>
+						</td>
+						<td style="width: 10%;">&nbsp;</td>
+						<td>
+							<div class="form-group field-adsbanner-cnt_show">
+								<label class="control-label" for="adsbanner-cnt_show">Показы</label>
+								<div class="form-control" readonly><b><?= $model->cnt_show ?></b></div>
+							</div>
+						</td>
+						<td>&nbsp;</td>
+						<td>
+							<div class="form-group field-adsbanner-cnt_click">
+								<label class="control-label" for="adsbanner-cnt_click">Переходы</label>
+								<div class="form-control" readonly><b><?= $model->cnt_click ?></b></div>
+							</div>
+						</td>
+						<td style="width: 10%;">&nbsp;</td>
+						<td>
+							<a href="<?= \yii\helpers\Url::to(['ads-banner/stat', 'id' => $model->id]) ?>">
+								Статистика по дням
+							</a>
+						</td>
+					</tr>
+				</table>
 				
 				<?= $form->field($model, 'is_enabled')->checkbox() ?>
 				
 				<?php if (!$model->isNewRecord): ?>
 					<?= $form->field($model, 'img')->textInput(['readonly' => true]) ?>
-					<img src="<?=$model->img?>" style="max-height: 100px; max-width: 100px;">
+					<img src="<?= $model->img ?>" style="max-height: 100px; max-width: 100px;">
 					<br>
 				<?php endif; ?>
 

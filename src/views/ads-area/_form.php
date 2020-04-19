@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use lgxenos\yii2\banner\models\AdsArea;
+use \yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $model lgxenos\yii2\banner\models\AdsArea */
@@ -44,10 +45,36 @@ use lgxenos\yii2\banner\models\AdsArea;
 				<?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
 				
 				<?php if (!$model->isNewRecord): ?>
-					<div class="form-group field-adsarea-description">
-						<label class="control-label" for="adsarea-description">Привязано банеров:</label>
+					<div class="form-group field-adsarea-stat">
+						<label class="control-label" for="adsarea-stat">Привязано банеров:</label>
 						<div class="help-block">
-							фывфыв
+							<table>
+								<tr>
+									<td>Всего:</td>
+									<td>&nbsp;</td>
+									<td><b><?= $model->getLinkedBannersOverview()['total'] ?></b></td>
+									<td>&nbsp;</td>
+									<td>
+										<a href="<?= Url::to([
+											'ads-banner/index',
+											'AdsBannerSearch[area_id]' => $model->id,
+										]) ?>">[посмотреть]</a>
+									</td>
+								</tr>
+								<tr>
+									<td>Активных:</td>
+									<td>&nbsp;</td>
+									<td><b><?= $model->getLinkedBannersOverview()['active'] ?></b></td>
+									<td>&nbsp;</td>
+									<td>
+										<a href="<?= Url::to([
+											'ads-banner/index',
+											'AdsBannerSearch[area_id]' => $model->id,
+											'AdsBannerSearch[is_enabled]' => 1,
+										]) ?>">[посмотреть]</a>
+									</td>
+								</tr>
+							</table>
 						</div>
 					</div>
 				<?php endif; ?>

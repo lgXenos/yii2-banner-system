@@ -12,4 +12,9 @@
 	<li>
 		<a href="<?= \yii\helpers\Url::to(['ads-area/index']) ?>">Зоны</a>
 	</li>
+	<!--
+	<li>
+		<a href="<?= \yii\helpers\Url::to(['ads-area/stat']) ?>">Статистика</a>
+	</li>
+	-->
 </ul>

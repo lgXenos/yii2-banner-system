@@ -15,6 +15,8 @@ use yii\widgets\DetailView;
 			'img',
 			'weigth',
 			'show_remains',
+			'cnt_show',
+			'cnt_click',
 			'user_id',
 			'area_id',
 			'notice',
@@ -23,5 +25,7 @@ use yii\widgets\DetailView;
 			'created_at',
 		],
 	]) ?>
+	
+	
 
 </div>

@@ -15,6 +15,8 @@ use yii\base\ErrorException;
  * @property string      $banner_type         Тип баннера
  * @property int         $weigth              Вес
  * @property int         $show_remains        Остаток показов
+ * @property int         $cnt_show            Показы
+ * @property int         $cnt_click           Переходы
  * @property int         $user_id             ID пользователя
  * @property int         $area_id             ID баннерной зоны
  * @property string|null $notice              Заметка для себя
@@ -39,8 +41,8 @@ class AdsBanner extends \yii\db\ActiveRecord {
 	 */
 	public function rules() {
 		return [
-			[['title', 'img', 'show_remains', 'user_id', 'area_id'], 'required'],
-			[['weigth', 'show_remains', 'user_id', 'area_id', 'is_enabled'], 'integer'],
+			[['title', 'img', 'user_id', 'area_id'], 'required'],
+			[['weigth', 'show_remains', 'cnt_show', 'cnt_click', 'user_id', 'area_id', 'is_enabled'], 'integer'],
 			[['title'], 'string', 'max' => 250],
 			[['hash'], 'string', 'max' => 32],
 			[['img'], 'string', 'max' => 512],
@@ -62,6 +64,8 @@ class AdsBanner extends \yii\db\ActiveRecord {
 			'banner_type'  => 'Тип баннера',
 			'weigth'       => 'Вес',
 			'show_remains' => 'Остаток показов',
+			'cnt_show'     => 'Показы',
+			'cnt_click'    => 'Переходы',
 			'user_id'      => 'ID пользователя',
 			'area_id'      => 'ID баннерной зоны',
 			'notice'       => 'Заметка для себя',
@@ -79,6 +83,13 @@ class AdsBanner extends \yii\db\ActiveRecord {
 			$this->hash = md5(time() . $this->title);
 		}
 		
+		/**
+		 * нельзя иметь включенный баннер без остатка показов
+		 */
+		if (!$this->show_remains) {
+			$this->is_enabled = 0;
+		}
+		
 		return parent::beforeSave($insert);
 	}
 	
@@ -93,6 +104,25 @@ class AdsBanner extends \yii\db\ActiveRecord {
 		//                                              selfModel  -> ^
 	}
 	
+	/**
+	 * Реляция на статистику
+	 *
+	 * @return \yii\db\ActiveQuery
+	 */
+	public function getStat() {
+		//                             <--------------->
+		return $this->hasMany(AdsStat::class, ['banner_id' => 'id']);
+		//                                              selfModel  -> ^
+	}
+	
+	/**
+	 * предовтращаем удаление активных баннеров
+	 *
+	 * @return false|int
+	 * @throws ErrorException
+	 * @throws \Throwable
+	 * @throws \yii\db\StaleObjectException
+	 */
 	public function delete() {
 		if ($this->show_remains) {
 			throw new ErrorException('Нельзя удалять активные баннера');
@@ -113,16 +143,32 @@ class AdsBanner extends \yii\db\ActiveRecord {
 	}
 	
 	/**
+	 * список для выпадашек
+	 *
+	 * @return array
+	 */
+	public static function getDropdownListByArea($areaId) {
+		return self::find()
+			->select(["title"])
+			->indexBy('id')
+			->orderBy('title ASC')
+			->andWhere(['area_id' => $areaId])
+			->asArray()
+			->column();
+	}
+	
+	/**
 	 * добавляем показ, снижаем счетчик
 	 */
 	public function addShow() {
 		$this->show_remains = $this->show_remains - 1;
+		$this->cnt_show     = $this->cnt_show + 1;
 		if ($this->show_remains <= 0) {
 			$this->is_enabled = 0;
 		}
 		$this->save(false);
 		AdsStat::insertStatRow($this->id, 1, 0);
-
+		
 		// TODO: добавляем показ, снижаем счетчик
 	}
 	
@@ -130,7 +176,36 @@ class AdsBanner extends \yii\db\ActiveRecord {
 	 * добавляем переход по ссылке
 	 */
 	public function addClick() {
+		$this->cnt_click = $this->cnt_click + 1;
+		$this->save(false);
+		
 		AdsStat::insertStatRow($this->id, 0, 1);
 		// добавляем переход по ссылке
+	}
+	
+	/**
+	 * отдает массив статистики для генерации таблицы статистики по банеру
+	 *
+	 * @return array
+	 */
+	public function getAdsDailyStatArray() {
+		static $ret;
+		if (!$ret) {
+			$ret = [
+				'min_date' => self::getStat()->min('show_date'),
+				'max_date' => self::getStat()->max('show_date'),
+				'stat'     => self::getStat()
+					->select([
+						'CONCAT (' . AdsStat::tableName() . '.show_date, " 00:00:00") AS show_date',
+						AdsStat::tableName() . '.cnt_show',
+						AdsStat::tableName() . '.cnt_click',
+					])
+					->asArray()
+					->orderBy(AdsStat::tableName() . '.show_date DESC')
+					->all(),
+			];
+		}
+		
+		return $ret;
 	}
 }

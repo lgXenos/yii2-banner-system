@@ -33,6 +33,10 @@ class DefaultController extends Controller {
 		switch ($action) {
 			case 'get':
 			{
+				if (!\Yii::$app->request->isPost) {
+					return;
+				}
+				
 				return $this->_getBannerFromArea((int)$id);
 			}
 			case 'go':
@@ -40,6 +44,7 @@ class DefaultController extends Controller {
 				$banner = AdsBanner::find()->where(['hash' => $id])->one();
 				if ($banner) {
 					$banner->addClick();
+					
 					return $this->redirect($banner->url);
 				}
 			}

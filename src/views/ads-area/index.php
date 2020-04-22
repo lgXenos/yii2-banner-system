@@ -30,7 +30,10 @@ CrudAsset::register($this);
 				[
 					'content' =>
 						Html::a('<i class="glyphicon glyphicon-plus"></i>', ['create'],
-							['role' => 'modal-remote', 'title' => 'Создание рекламной зоны', 'class' => 'btn btn-default']) .
+							['role'  => 'modal-remote',
+							 'title' => 'Создание рекламной зоны',
+							 'class' => 'btn btn-default',
+							]) .
 						Html::a('<i class="glyphicon glyphicon-repeat"></i>', [''],
 							['data-pjax' => 1, 'class' => 'btn btn-default', 'title' => 'Сброс Grid']) .
 						'{toggleData}' .

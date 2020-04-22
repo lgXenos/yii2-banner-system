@@ -2,32 +2,36 @@
 
 namespace lgxenos\yii2\banner\models;
 
+use lgxenos\yii2\banner\BannerModule;
 use Yii;
 use yii\base\ErrorException;
+use yii\web\UploadedFile;
 
 /**
  * This is the model class for table "ads_banner".
  *
- * @property int         $id                  ID
- * @property string      $title               Название
- * @property string      $url                 Ссылка
- * @property string      $img                 Изображение
- * @property string      $banner_type         Тип баннера
- * @property int         $weigth              Вес
- * @property int         $show_remains        Остаток показов
- * @property int         $cnt_show            Показы
- * @property int         $cnt_click           Переходы
- * @property int         $user_id             ID пользователя
- * @property int         $area_id             ID баннерной зоны
- * @property string|null $notice              Заметка для себя
- * @property int         $is_enabled          Включен
- * @property int         $hash                Служебный хэш
- * @property int         $created_at          Дата создания
+ * @property int               $id                  ID
+ * @property string            $title               Название
+ * @property string            $url                 Ссылка
+ * @property string            $img                 Изображение
+ * @property string            $banner_type         Тип баннера
+ * @property int               $weigth              Вес
+ * @property int               $show_remains        Остаток показов
+ * @property int               $cnt_show            Показы
+ * @property int               $cnt_click           Переходы
+ * @property int               $user_id             ID пользователя
+ * @property int               $area_id             ID баннерной зоны
+ * @property string|null       $notice              Заметка для себя
+ * @property int               $is_enabled          Включен
+ * @property int               $hash                Служебный хэш
+ * @property int               $created_at          Дата создания
  *
- * @property AdsArea     $area                Зона установки банера
+ * @property AdsArea           $area                Зона установки банера
+ * @property UploadedFile|null $uploadedImg         Изображение
  */
 class AdsBanner extends \yii\db\ActiveRecord {
 	const ADS_AREA_TYPE_IMAGE = 'image';
+	public $uploadedImg;
 	
 	/**
 	 * {@inheritdoc}
@@ -49,6 +53,7 @@ class AdsBanner extends \yii\db\ActiveRecord {
 			[['notice', 'url'], 'string', 'max' => 1024],
 			[['created_at'], 'safe'],
 			[['banner_type'], 'in', 'range' => array_keys(self::getTypesArray())],
+			[['uploadedImg'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'],
 		];
 	}
 	
@@ -60,6 +65,7 @@ class AdsBanner extends \yii\db\ActiveRecord {
 			'id'           => 'ID',
 			'title'        => 'Название',
 			'img'          => 'Изображение',
+			'uploadedImg'  => 'Изображение',
 			'url'          => 'Ссылка',
 			'banner_type'  => 'Тип баннера',
 			'weigth'       => 'Вес',
@@ -93,6 +99,60 @@ class AdsBanner extends \yii\db\ActiveRecord {
 		return parent::beforeSave($insert);
 	}
 	
+	public function save($runValidation = true, $attributeNames = null) {
+		$moduleInstance    = BannerModule::getModuleInstance();
+		$this->uploadedImg = UploadedFile::getInstance($this, 'uploadedImg');
+		// 
+		if ($this->uploadedImg) {
+			$userId           = Yii::$app->user->identity->getId();
+			$targetFileFolder = str_replace('%USER_ID%', "user_{$userId}", Yii::getAlias($moduleInstance->uploadPath));
+			\yii\helpers\FileHelper::createDirectory($targetFileFolder, $mode = 0775, $recursive = true);
+			
+			$fileName = date("Y-d-m_H-i-s") . '.' . $this->uploadedImg->extension;
+			if (!$this->uploadedImg->saveAs($targetFileFolder . $fileName)) {
+				throw new ErrorException('Ошибка загрузки файла: ' . $targetFileFolder . $fileName);
+			}
+			
+			$this->uploadedImg = null;
+			$this->deleteImg();
+			$targetWebFolder = str_replace('%USER_ID%', "user_{$userId}", $moduleInstance->uploadWebPath);
+			$this->img       = $targetWebFolder . $fileName;
+		}
+		
+		return parent::save($runValidation, $attributeNames);
+	}
+	
+	/**
+	 * предовтращаем удаление активных баннеров
+	 *
+	 * @return false|int
+	 * @throws ErrorException
+	 * @throws \Throwable
+	 * @throws \yii\db\StaleObjectException
+	 */
+	public function delete() {
+		if ($this->show_remains) {
+			throw new ErrorException('Нельзя удалять активные баннера');
+		}
+		$this->deleteImg();
+		
+		return parent::delete();
+	}
+	
+	public function deleteImg() {
+		if (empty($this->img)) {
+			return;
+		}
+		preg_match("|/(user_\d+/.+)|", $this->img, $matches);
+		$fileName = $matches[1];
+		$filePath = str_replace('%USER_ID%', $fileName, (BannerModule::getModuleInstance())->uploadPath);
+		$filePath = Yii::getAlias(rtrim($filePath, ' /'));
+		
+		if (file_exists($filePath)) {
+			unlink($filePath);
+		}
+	}
+	
 	/**
 	 * Реляция на банеры
 	 *
@@ -113,22 +173,6 @@ class AdsBanner extends \yii\db\ActiveRecord {
 		//                             <--------------->
 		return $this->hasMany(AdsStat::class, ['banner_id' => 'id']);
 		//                                              selfModel  -> ^
-	}
-	
-	/**
-	 * предовтращаем удаление активных баннеров
-	 *
-	 * @return false|int
-	 * @throws ErrorException
-	 * @throws \Throwable
-	 * @throws \yii\db\StaleObjectException
-	 */
-	public function delete() {
-		if ($this->show_remains) {
-			throw new ErrorException('Нельзя удалять активные баннера');
-		}
-		
-		return parent::delete();
 	}
 	
 	/**

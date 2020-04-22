@@ -27,7 +27,7 @@ if ($model->user_id === null || $model->user_id === '') {
 				<?= $form->field($model, 'url')->textInput(['maxlength' => true]) ?>
 				
 				<?php if ($model->isNewRecord): ?>
-					<?= $form->field($model, 'img')->textInput(['maxlength' => true]) ?>
+					<?= $form->field($model, 'uploadedImg')->fileInput(['class' => 'form-control']); ?>
 				<?php endif; ?>
 				
 				
@@ -64,8 +64,20 @@ if ($model->user_id === null || $model->user_id === '') {
 				<?= $form->field($model, 'is_enabled')->checkbox() ?>
 				
 				<?php if (!$model->isNewRecord): ?>
-					<?= $form->field($model, 'img')->textInput(['readonly' => true]) ?>
-					<img src="<?= $model->img ?>" style="max-height: 100px; max-width: 100px;">
+					<div class="form-group field-adsbanner-img">
+						<label class="control-label" for="adsbanner-img">Изображение</label>
+						<table>
+							<tr>
+								<td>
+									<img src="<?= $model->img ?>" style="max-height: 150px; max-width: 150px;">
+								</td>
+								<td>&nbsp;</td>
+								<td>
+									<div class="form-control" readonly><b><?= $model->img ?></b></div>
+								</td>
+							</tr>
+						</table>
+					</div>
 					<br>
 				<?php endif; ?>
 

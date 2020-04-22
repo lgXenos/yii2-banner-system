@@ -1,4 +1,4 @@
-yii2 Баннерная система ( ALPHA !!! )
+yii2 Баннерная система 
 =============
 
 [![Latest Stable Version](https://poser.pugx.org/lg-xenos/yii2-banner-system/v/stable)](https://packagist.org/packages/lg-xenos/yii2-banner-system)

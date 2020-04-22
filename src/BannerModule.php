@@ -18,7 +18,7 @@ class BannerModule extends \yii\base\Module implements BootstrapInterface {
 	/** @var string $userModel - имя поля из модели юзеров */
 	public $userModelName = 'username';
 	/** @var string $uploadPath - путь загрузки картинок, поддерживает параметр ID пользователя */
-	public $uploadPath = '@frontend/upload/bnr/%USER_ID%/';
+	public $uploadPath = '@frontend/web/upload/bnr/%USER_ID%/';
 	/** @var string $uploadWebPath - путь отображения картинок, поддерживает параметр ID пользователя */
 	public $uploadWebPath = '/upload/bnr/%USER_ID%/';
 	/** @var string $uploadWebPath - путь отображения картинок, поддерживает параметр ID пользователя */

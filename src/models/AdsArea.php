@@ -69,7 +69,7 @@ class AdsArea extends \yii\db\ActiveRecord {
 	
 	/**
 	 * предотвращаем удаление зоны, к которой привязаны баннеры
-	 * 
+	 *
 	 * @return false|int
 	 * @throws ErrorException
 	 * @throws \Throwable
@@ -85,16 +85,16 @@ class AdsArea extends \yii\db\ActiveRecord {
 	
 	/**
 	 * получаем общую статистику по баннерам в этой зоне: total + active
-	 * 
-	 * 
+	 *
+	 *
 	 * @return array
 	 */
-	public function getLinkedBannersOverview(){
+	public function getLinkedBannersOverview() {
 		static $ret;
-		if(!$ret){
+		if (!$ret) {
 			$ret = [
-				'total' => $this->getBanners()->count(),
-				'active' => $this->getBanners()->andWhere(['is_enabled'=>1])->count(),
+				'total'  => $this->getBanners()->count(),
+				'active' => $this->getBanners()->andWhere(['is_enabled' => 1])->count(),
 			];
 		}
 		
@@ -115,7 +115,7 @@ class AdsArea extends \yii\db\ActiveRecord {
 	
 	/**
 	 * список для выпадашек
-	 * 
+	 *
 	 * @return array
 	 */
 	public static function getDropdownList() {
@@ -129,7 +129,7 @@ class AdsArea extends \yii\db\ActiveRecord {
 	
 	/**
 	 * получить ID баннеров и их веса
-	 * 
+	 *
 	 * @return array|AdsAreaQuery[]
 	 */
 	public function getBannerIdAndWeigth() {

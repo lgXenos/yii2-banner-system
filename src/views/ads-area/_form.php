@@ -69,7 +69,7 @@ use \yii\helpers\Url;
 									<td>
 										<a href="<?= Url::to([
 											'ads-banner/index',
-											'AdsBannerSearch[area_id]' => $model->id,
+											'AdsBannerSearch[area_id]'    => $model->id,
 											'AdsBannerSearch[is_enabled]' => 1,
 										]) ?>">[посмотреть]</a>
 									</td>

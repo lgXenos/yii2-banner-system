@@ -25,7 +25,6 @@ use yii\widgets\DetailView;
 			'created_at',
 		],
 	]) ?>
-	
-	
+
 
 </div>

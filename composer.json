@@ -25,7 +25,8 @@
 	],
 	"require" : {
 		"yiisoft/yii2" : "^2",
-		"lg-xenos/yii2-ajaxcrud" : "^2.1"
+		"lg-xenos/yii2-ajaxcrud" : "^2.1",
+		"kartik-v/yii2-widget-select2": "^2.1"
 	},
 	"autoload" : {
 		"psr-4" : {

@@ -23,6 +23,8 @@ class BannerModule extends \yii\base\Module implements BootstrapInterface {
 	public $uploadWebPath = '/upload/bnr/%USER_ID%/';
 	/** @var string $uploadWebPath - путь отображения картинок, поддерживает параметр ID пользователя */
 	public $mobileWidth = 768;
+	/** @var bool - использовать мягкие, max-heigth, а не жесткие height */
+	public $useSoftAreaSizes = false;
 	
 	/**
 	 * @param \yii\base\Application $app
@@ -70,7 +72,7 @@ class BannerModule extends \yii\base\Module implements BootstrapInterface {
 	}
 	
 	/**
-	 * резеравируем данный участок в шаблоне под рекламную зону
+	 * резервируем данный участок в шаблоне под рекламную зону
 	 *
 	 * @param $id
 	 */
@@ -147,12 +149,19 @@ JS;
 			);
 		}
 		
+		if ($moduleInstance->useSoftAreaSizes) {
+			$styleSizes = "max-width:{$area->width}px; max-height:{$area->heigth}px;";
+		}
+		else {
+			$styleSizes = "width:{$area->width}px; height:{$area->heigth}px;";
+		}
+		
 		echo <<<HTML
 			<div class="{$adsClass}"
 				 data-id="{$area->id}"
 				 data-type="{$area->area_type}"
 				 data-loaded="0"
-				 style="max-width:{$area->width}px; max-height:{$area->heigth}px;overflow: hidden;"
+				 style="overflow: hidden;{$styleSizes}"
 			></div>
 HTML;
 	}

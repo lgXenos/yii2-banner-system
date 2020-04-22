@@ -55,12 +55,15 @@ composer require lg-xenos/yii2-banner-system
 		/* ... */
 		'adwert'   => [
 			'class'          => lgxenos\yii2\banner\BannerModule::class,
-			// module settings
 			'frontPrettyUrl' => '/asd/',
-			'userModel'      => \common\models\User::class,
-			'userModelName'  => 'username',
+            //
+			// ОПЦИОНАЛЬНЫЕ НАСТРОЙКИ. ТОЛЬКО ЕСЛИ ВАМ НАДО ЧТО-ТО МЕНЯТЬ
+            // module settings
 			'uploadPath'     => '@frontend/upload/banners/%USER_ID%/',
 			'uploadWebPath'  => '/upload/banners/%USER_ID%/',
+			'userModel'      => \common\models\User::class,
+			'userModelName'  => 'username',
+			'mobileWidth'    => 768,
 			// yii settings
 			'layout'         => '@frontend/modules/yiiAdmin/views/layouts/main.php',
 		],
@@ -92,8 +95,17 @@ Let 's add into 2 places of your app-config (for example `frontend/config/main.p
 	'modules'             => [
 		/* ... */
 		'adwert'   => [
-			'class'          => lgxenos\yii2\banner\Module::class,
+			'class'          => lgxenos\yii2\banner\BannerModule::class,
 			'frontPrettyUrl' => '/asd/',
+            //
+			// OPTIONAL SETTINGS. IF YOU NEED CHANGE SOMETHING ONLY
+            // module settings
+			'uploadPath'     => '@frontend/upload/banners/%USER_ID%/',
+			'uploadWebPath'  => '/upload/banners/%USER_ID%/',
+			'userModel'      => \common\models\User::class,
+			'userModelName'  => 'username',
+			'mobileWidth'    => 768,
+			// yii settings
 			'layout'         => '@frontend/modules/yiiAdmin/views/layouts/main.php',
 		],
 		/* ... */

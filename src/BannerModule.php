@@ -109,6 +109,7 @@ class BannerModule extends \yii\base\Module implements BootstrapInterface {
 				  $('.' + classId).each(function() {
 				  	var t = $(this);
 				  	var ww = window.innerWidth;
+				  	
 				  	if(t.data('loaded')){
 				  	  return;
 				  	}
@@ -123,6 +124,7 @@ class BannerModule extends \yii\base\Module implements BootstrapInterface {
 				  	}
 				  	t.attr('data-busy', 1);
 				  	
+				  	t.css({display:'block'});
 				  	var aId = t.data('id');
 				    $.post('{$moduleInstance->frontPrettyUrl}', {
 				      $csrf,
@@ -145,7 +147,7 @@ class BannerModule extends \yii\base\Module implements BootstrapInterface {
 				
 JS;
 			\Yii::$app->controller->view->registerJs(
-				preg_replace(["/\n/", "/\t/", "/\s{2}/"], '', $init), View::POS_READY
+				preg_replace(["/\n/", "/\t/", "/\s{2}/"], '', $init),  View::POS_READY
 			);
 		}
 		
@@ -161,7 +163,7 @@ JS;
 				 data-id="{$area->id}"
 				 data-type="{$area->area_type}"
 				 data-loaded="0"
-				 style="overflow: hidden;{$styleSizes}"
+				 style="overflow: hidden;display:none;{$styleSizes}"
 			></div>
 HTML;
 	}
